@@ -26,7 +26,7 @@ This plugin allows you to create a full screen popup window with custom content 
 
 = Want more features ? =
 
-Check out the [premium version] (http://xyzscripts.com/wordpress-plugins/xyz-wp-popup/ "XYZ WP Popup") of this plugin.
+Check out the [premium version](http://xyzscripts.com/wordpress-plugins/xyz-wp-popup/ "XYZ WP Popup") of this plugin.
 
 = About =
 
