@@ -89,7 +89,7 @@ More questions ? [Drop a mail](http://xyzscripts.com/support/ "XYZScripts Suppor
 
 == Screenshots ==
 
-1. Sample full screen popup display.
+1. Sample full screen popup display. 
 
 == Changelog ==
 
