@@ -4,7 +4,7 @@ Donate link: http://xyzscripts.com/donate/
 
 Tags: full screen popup, full screen pop, popup, full page popup, full window popup, popup box, onclick popup, custom message popup, popup message on pages, popup message
 Requires at least: 2.8
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: 1.0
 License: GPLv2 or later
 
