@@ -3,7 +3,7 @@
 Plugin Name:Full Screen Popup
 Plugin URI: http://xyzscripts.com/wordpress-plugins/full-screen-popup/
 Description: This plugin allows you to create a full screen popup window with custom content in your site. You can customize the popup display by configuring various settings such as display logic settings (trigger based on timeout after page load, based on number of pages browsed, popup repeat interval) and style settings(z-index, color, border etc). The plugin supports automatic and manual (shortcode) display.
-Version: 1.0
+Version: 1.1
 Author: xyzscripts.com
 Author URI: http://xyzscripts.com/
 License: GPLv2 or later
@@ -44,6 +44,8 @@ require( dirname( __FILE__ ) . '/admin/menu.php' );
 
 require( dirname( __FILE__ ) . '/create-fullscreen.php' );
 
+require( dirname( __FILE__ ) . '/ajax-handler.php' );
+
 require( dirname( __FILE__ ) . '/shortcode-handler.php' );
 
 require( dirname( __FILE__ ) . '/admin/destruction.php' );
@@ -54,9 +56,28 @@ if(get_option('xyz_credit_link')=="fsp"){
 
 }
 function xyz_fsp_credit() {
-	$content = '<div style="clear:both;width:100%;text-align:center; font-size:11px; "><a target="_blank" href="http://xyzscripts.com/wordpress-plugins/full-screen-popup/details">Full Screen Popup</a> Powered By : <a target="_blank" title="PHP Scripts & Programs" href="http://www.xyzscripts.com" >XYZScripts.com</a></div>';
+	$content = '<div style="clear:both;width:100%;text-align:center; font-size:11px; "><a target="_blank" href="http://xyzscripts.com/wordpress-plugins/full-screen-popup/details">Full Screen Popup</a> Powered By : <a target="_blank" title="PHP Scripts & Wordpress Plugins" href="http://www.xyzscripts.com" >XYZScripts.com</a></div>';
 	echo $content;
 }
+
+
+
+function xyz_fsp_query_vars($vars) {
+	$vars[] = 'xyz_fsp';
+	return $vars;
+}
+add_filter('query_vars', 'xyz_fsp_query_vars');
+
+
+function xyz_fsp_parse_request($wp) {
+	if (array_key_exists('xyz_fsp', $wp->query_vars)
+			&& $wp->query_vars['xyz_fsp'] == 'iframe') {
+		require( dirname( __FILE__ ) . '/iframe.php' );
+		die;
+	}
+
+}
+add_action('parse_request', 'xyz_fsp_parse_request');
 
 
 ?>

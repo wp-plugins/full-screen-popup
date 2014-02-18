@@ -1,5 +1,23 @@
 <?php
+function xyz_fsp_network_destroy($networkwide) {
+	global $wpdb;
 
+	if (function_exists('is_multisite') && is_multisite()) {
+		// check if it is a network activation - if so, run the activation function for each blog id
+		if ($networkwide) {
+			$old_blog = $wpdb->blogid;
+			// Get all blog ids
+			$blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+			foreach ($blogids as $blog_id) {
+				switch_to_blog($blog_id);
+				fsp_destroy();
+			}
+			switch_to_blog($old_blog);
+			return;
+		}
+	}
+	fsp_destroy();
+}
 
 function fsp_destroy()
 {
@@ -14,6 +32,12 @@ function fsp_destroy()
 	delete_option("xyz_fsp_width");
 	delete_option("xyz_fsp_height");
 	delete_option("xyz_fsp_left");
+	
+	delete_option("xyz_fsp_enable");
+	delete_option("xyz_fsp_adds_enable");
+	delete_option("xyz_fsp_cache_enable");
+	delete_option("xyz_fsp_showing_option");
+	
 	delete_option("xyz_fsp_delay");
 	delete_option("xyz_fsp_page_count");
 	delete_option("xyz_fsp_mode"); //page_count_only,both are other options
@@ -41,7 +65,7 @@ function fsp_destroy()
 
 }
 
-register_uninstall_hook(XYZ_FSP_PLUGIN_FILE,'fsp_destroy');
+register_uninstall_hook(XYZ_FSP_PLUGIN_FILE,'xyz_fsp_network_destroy');
 
 
 ?>

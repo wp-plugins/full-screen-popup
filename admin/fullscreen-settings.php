@@ -11,16 +11,9 @@ if($xyz_tinymce==1)
 		$xyz_fsp_repeat_interval_timing=$_POST['xyz_fsp_repeat_interval_timing'];
 		$xyz_fsp_html=stripslashes($_POST['xyz_fsp_html']);
 	
+		$xyz_fsp_showing_option="0,0,0";
 		
-		$xyz_fsp_title_color=$_POST['xyz_fsp_title_color'];
-		$xyz_fsp_display_position=$_POST['xyz_fsp_display_position'];
-		$xyz_fsp_top=abs(intval($_POST['xyz_fsp_top']));
-	 $xyz_fsp_bottom=abs(intval($_POST['xyz_fsp_bottom']));
-		$xyz_fsp_width=abs(intval($_POST['xyz_fsp_width']));
-		$xyz_fsp_height=abs(intval($_POST['xyz_fsp_height']));
-		  $xyz_fsp_left=abs(intval($_POST['xyz_fsp_left']));
 		
-		$xyz_fsp_right=abs(intval($_POST['xyz_fsp_right']));
 		$xyz_fsp_delay=abs(intval($_POST['xyz_fsp_delay']));
 		$xyz_fsp_page_count=abs(intval($_POST['xyz_fsp_page_count']));
 		$xyz_fsp_repeat_interval=abs(intval($_POST['xyz_fsp_repeat_interval']));
@@ -31,20 +24,31 @@ if($xyz_tinymce==1)
 		
 		 $xyz_fsp_bg_color=$_POST['xyz_fsp_bg_color'];		
 		$xyz_fsp_corner_radius=abs(intval($_POST['xyz_fsp_corner_radius']));
-		$xyz_fsp_top_dim=$_POST['xyz_fsp_top_dim'];
-		$xyz_fsp_left_dim=$_POST['xyz_fsp_left_dim'];
-		$xyz_fsp_right_dim=$_POST['xyz_fsp_right_dim'];
-		$xyz_fsp_bottom_dim=$_POST['xyz_fsp_bottom_dim'];
-		$xyz_fsp_width_dim=$_POST['xyz_fsp_width_dim'];
-		$xyz_fsp_height_dim=$_POST['xyz_fsp_height_dim'];
+		
 		$xyz_fsp_border_color=$_POST['xyz_fsp_border_color'];
 		$xyz_fsp_border_width=$_POST['xyz_fsp_border_width'];
 		$xyz_fsp_page_option=$_POST['xyz_fsp_page_option'];
-		$xyz_fsp_close_button_option=$_POST['xyz_fsp_close_button_option'];
-		$xyz_fsp_positioning=$_POST['xyz_fsp_positioning'];
-		$xyz_fsp_position_predefined=$_POST['xyz_fsp_position_predefined'];
 		
 		
+		
+		
+		if($xyz_fsp_page_option==2)
+		{
+			$fsp_pgf=0;
+			$fsp_pof=0;
+			$fsp_hp=0;
+			if(isset($_POST['xyz_fsp_pages']))
+				$fsp_pgf=1;
+			if(isset($_POST['xyz_fsp_posts']))
+				$fsp_pof=1;
+			if(isset($_POST['xyz_fsp_hp']))
+				$fsp_hp=1;
+		
+			$xyz_fsp_showing_option=$fsp_pgf.",".$fsp_pof.",".$fsp_hp;
+		
+			update_option('xyz_fsp_showing_option',$xyz_fsp_showing_option);
+		
+		}
 		
 $old_page_count=get_option('xyz_fsp_page_count');
 $old_repeat_interval=get_option('xyz_fsp_repeat_interval');
@@ -75,7 +79,7 @@ if(isset($_POST['xyz_fsp_cookie_resett']))
 		update_option('xyz_fsp_mode',$xyz_fsp_mode);
 		update_option('xyz_fsp_z_index',$xyz_fsp_z_index);
 		
-		update_option('xyz_fsp_color',$xyz_fsp_color);
+		//update_option('xyz_fsp_color',$xyz_fsp_color);
 		update_option('xyz_fsp_corner_radius',$xyz_fsp_corner_radius);
 		
 		update_option('xyz_fsp_border_color',$xyz_fsp_border_color);
@@ -123,16 +127,21 @@ cursor:default;
 v=document.getElementById('xyz_fsp_page_option').value;
 if(v==1)
 {
-	document.getElementById('automatic').style.display='';
-
+	document.getElementById('automatic').style.display='block';
+	document.getElementById('shopt').style.display='none';
 	document.getElementById('shortcode').style.display='none';		
 }
-
+if(v==2)
+{
+	document.getElementById('shopt').style.display='block';
+	document.getElementById('shortcode').style.display='none';
+	document.getElementById('automatic').style.display='none';	
+}
 if(v==3)
 
 {
-	document.getElementById('shortcode').style.display='';	
-	
+	document.getElementById('shortcode').style.display='block';	
+	document.getElementById('shopt').style.display='none';
 	document.getElementById('automatic').style.display='none';
 }
   }
@@ -176,7 +185,10 @@ $xyz_fsp_iframe=get_option('xyz_fsp_iframe');
 ?>
 <h2>Full Screen Popup  Settings</h2>
 <form method="post" >
-
+<?php 
+$xyz_fsp_showing_option=get_option('xyz_fsp_showing_option');
+$xyz_fsp_sh_arr=explode(",", $xyz_fsp_showing_option);
+?>
 <table  class="widefat" style="width:98%">
 
 <tr valign="top" >
@@ -306,15 +318,33 @@ $xyz_fsp_repeat_interval_timing=get_option('xyz_fsp_repeat_interval_timing');
 <td>
 <select name="xyz_fsp_page_option" id="xyz_fsp_page_option" onchange="bgchange()">
 <option value ="1" <?php if($xyz_fsp_page_option=='1') echo 'selected'; ?> >Automatic </option>
-
+<option value ="2" <?php if($xyz_fsp_page_option=='2') echo 'selected'; ?> >Specific Pages</option>
 <option value ="3" <?php if($xyz_fsp_page_option=='3') echo 'selected'; ?> >Manual </option>
 </select></td></tr>
-<tr valign="top" id="automatic"  style="display: none"><td scope="row" ></td><td >( Popup will load in all pages)</td>
+
+
+
+<tr valign="top" ><td scope="row" ></td><td>
+<span  id="automatic" >Popup will load in all pages</span>
+<span  id="shopt" >
+<input name="xyz_fsp_pages" value="<?php echo $xyz_fsp_sh_arr[0];?>"<?php if($xyz_fsp_sh_arr[0]==1){?> checked="checked"<?php } ?> type="checkbox"> On Pages 
+<input name="xyz_fsp_posts" value="<?php echo $xyz_fsp_sh_arr[1];?>"<?php if($xyz_fsp_sh_arr[1]==1){?> checked="checked"<?php }?>  type="checkbox"> On Posts
+<input name="xyz_fsp_hp" value="<?php echo $xyz_fsp_sh_arr[2];?>"<?php if($xyz_fsp_sh_arr[2]==1){?> checked="checked"<?php }?>  type="checkbox"> On Home page 
+</span>
+<span  id="shortcode" >Use this short code in your pages - [xyz_fsp_default_code]</span>
+</td>
+</tr>
+
+
+
+
+
+<!--  <tr valign="top" id="automatic"  style="display: none"><td scope="row" ></td><td >( Popup will load in all pages)</td>
 
 </tr>
 
 <tr valign="top" id="shortcode"  style="display: none"><td scope="row"></td><td>Use this short code in your pages - [xyz_fsp_default_code]</td>
-</tr>
+</tr>-->
 
 
 <tr valign="top">

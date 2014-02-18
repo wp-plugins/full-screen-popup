@@ -1,12 +1,11 @@
 <?php
 
-if ( is_admin() )
-{
+
 
 	add_action('admin_menu', 'fsp_menu');
 	
 
-}
+
 
 function fsp_menu()
 {
@@ -66,10 +65,14 @@ function fsp_farbtastic_style()
 }
 function xyz_fsp_admin_style()
 {
-	require( dirname( __FILE__ ) . '/style.php' );
+	//require( dirname( __FILE__ ) . '/style.php' );
+	wp_enqueue_script('jquery');
+	wp_register_style('xyz_fsp_style', plugins_url('full-screen-popup/css/style.css'));
+	wp_enqueue_style('xyz_fsp_style');
+	
 
 }
-	wp_enqueue_script('jquery');
-add_action('admin_print_styles', 'xyz_fsp_admin_style');
+	
+add_action('admin_enqueue_scripts', 'xyz_fsp_admin_style');
 
 ?>
