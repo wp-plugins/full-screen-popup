@@ -111,11 +111,13 @@ $iframe_option=get_option('xyz_fsp_iframe');
  
 global $wpdb;
 
-ob_flush();
+$tmp=ob_get_contents();
+ob_clean();
 ob_start();
-	?>
-	<style type="text/css">
 
+?>
+	
+<style type="text/css">
 .fsp_content {
 display: none;
 position: fixed;
@@ -131,7 +133,11 @@ border: <?php echo $border_width; ?>px solid <?php echo $border_color;?>;
 background-color: <?php echo $bg_color;?>;
 z-index:<?php echo $z_index+1;?>;
 overflow: hidden;
-border-radius:<?php echo $corner_radius;?>px
+border-radius:<?php echo $corner_radius;?>px;
+
+box-sizing: content-box;
+-moz-box-sizing: content-box;
+-webkit-box-sizing: content-box;
 
 }
 .fsp_iframe{
@@ -162,8 +168,10 @@ echo do_shortcode($html);}
 
 <script type="text/javascript">
 
-
+function xyz_fsp_settings()
+{
 var screenheight=jQuery(window).height(); 
+/*var screenheight=window.innerHeight;*/
 var screenwidth=jQuery(window).width(); 
 
 var bordwidth=<?php echo $border_width;?>;
@@ -181,7 +189,7 @@ var bordwidth=<?php echo $border_width;?>;
 		 newwidth=screenwidth-(2*bordwidth);
 			document.getElementById("fsp_light").style.width=newwidth+'px';
 
-
+}
 	
 	
 
@@ -228,7 +236,11 @@ document.getElementById("fsp_light").innerHTML="";
 function fsp_show_lightbox()
 {
 
-//alert(fsp_tracking_cookie_val);
+	xyz_fsp_settings();
+	jQuery(window).resize(function(){
+		xyz_fsp_settings();
+
+ });
 
 if(xyz_fsp_tracking_cookie_val==1)
 return;
@@ -264,9 +276,12 @@ setTimeout("fsp_show_lightbox()",<?php echo $delay*1000;?>);
 
 
 <?php 
-$lbc=ob_get_contents();
+
+
+$lbc = ob_get_contents();
 ob_clean();
-return  $lbc;
+echo $tmp;
+return $lbc;
 
 }
 

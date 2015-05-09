@@ -3,7 +3,7 @@
 Plugin Name:Full Screen Popup
 Plugin URI: http://xyzscripts.com/wordpress-plugins/full-screen-popup/
 Description: This plugin allows you to create a full screen popup window with custom content in your site. You can customize the popup display by configuring various settings such as display logic settings (trigger based on timeout after page load, based on number of pages browsed, popup repeat interval) and style settings(z-index, color, border etc). The plugin supports automatic and manual (shortcode) display.
-Version: 1.1
+Version: 1.2
 Author: xyzscripts.com
 Author URI: http://xyzscripts.com/
 License: GPLv2 or later

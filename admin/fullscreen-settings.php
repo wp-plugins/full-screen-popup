@@ -7,6 +7,7 @@ if($xyz_tinymce==1)
 }
 	if (isset($_POST['xyz_fsp_html']))
 	{
+		$_POST=stripslashes_deep($_POST);
 		$xyz_fsp_iframe=$_POST['xyz_fsp_iframe'];
 		$xyz_fsp_repeat_interval_timing=$_POST['xyz_fsp_repeat_interval_timing'];
 		$xyz_fsp_html=stripslashes($_POST['xyz_fsp_html']);
@@ -248,7 +249,7 @@ $xyz_fsp_repeat_interval_timing=get_option('xyz_fsp_repeat_interval_timing');
 				
 <tr valign="top">
 
-<td scope="row" colspan="1"><label for="xyz_fsp_bgimage_option">Display as iframe </label></td><td>
+<td scope="row" colspan="1"><label for="xyz_fsp_iframe">Display as iframe </label></td><td>
 
 
 <select name="xyz_fsp_iframe" id="xyz_fsp_iframe"  >

@@ -4,8 +4,8 @@ Donate link: http://xyzscripts.com/donate/
 
 Tags: full screen popup, full screen pop, popup, full page popup, full window popup, popup box, onclick popup, custom message popup, popup message on pages, popup message
 Requires at least: 2.8
-Tested up to: 4.0
-Stable tag: 1.1
+Tested up to: 4.2.2
+Stable tag: 1.2
 License: GPLv2 or later
 
 Create a javascript based, light-weight and non-annoying full screen popup box in your blog.
@@ -97,6 +97,10 @@ More questions ? [Drop a mail](http://xyzscripts.com/support/ "XYZScripts Suppor
 1. Sample full screen popup display. 
 
 == Changelog ==
+
+= 1.2 =
+* Responsive full screen popup
+* Fixed a few bugs
 
 = 1.1 =
 * Display specifically in pages/posts/home page.
